@@ -9,15 +9,12 @@ var indexRouter = require('./routes/index');
 var app = express();
 
 
-const sqlite3 = require('sqlite3').verbose();
-
 //Connect to the database
-let db = new sqlite3.Database('./mydatabase.db', (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Connected to the mydatabase.db database.');
-});
+const Database = require('better-sqlite3');
+const db = new Database('./mydatabase.db', { verbose: console.log });
+
+const stmt = db.prepare('CREATE TABLE accounts (username varchar(255), password varchar(225))');
+stmt.run();
 
 
 

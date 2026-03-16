@@ -13,7 +13,7 @@ WORKDIR /src
 
 # Install the dependencies
 RUN npm install
-RUN npm install sqlite3
+RUN npm install better-sqlite3
 RUN chmod +x commands.sh
 
 CMD ["/bin/sh","-c","./commands.sh"]

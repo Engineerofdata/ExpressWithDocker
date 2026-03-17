@@ -7,19 +7,23 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-
-    <form action="/submit" method="POST">
-      <input type = "text"
-            name="username"
-            placeholder="Enter your username">
-      <input type = "test"
-            name="password"
-            placeholder="Password">
-      
-      <button type="submit">Submit</button>
-      <button type="button">Create Account</button>
-
-    </form>
-
+    <div>
+      <h2>Accounts</h2>
+      <table>
+        <tr>
+          <th>Username</th>
+          <th>Password</th>
+        </tr>
+        <% accounts.forEach(function(account) { %>
+          <tr>
+            <td><%= account.username %></td>
+            <td><%= account.password %></td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+    <a href="/createAccount">
+      <button>Create Account</button>
+    </a>
   </body>
 </html>

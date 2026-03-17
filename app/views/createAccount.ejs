@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Please create an acccount!</h1>
+    <p>Welcome to <%= title %></p>
+
+    <form action="/createAccountSubmit" method="POST">
+      <input type = "text"
+            name="username"
+            placeholder="Enter your username">
+      <input type = "password"
+            name="password"
+            placeholder="Password">
+      
+      <button type="submit">Submit</button>
+    </form>
+
+
+
+  </body>
+</html>

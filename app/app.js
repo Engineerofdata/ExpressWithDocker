@@ -5,34 +5,45 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var indexCreatAccountRouter = require('./routes/createAccount');
 
 var app = express();
 
 
 //Connect to the database
 const Database = require('better-sqlite3');
-const db = new Database('./mydatabase.db', { verbose: console.log });
+const db = new Database('mydatabase.db', { verbose: console.log });
 
-const stmt = db.prepare('CREATE TABLE accounts (username varchar(255), password varchar(225))');
+const stmt = db.prepare('CREATE TABLE IF NOT EXISTS accounts (username varchar(255), password varchar(225))');
 stmt.run();
 
-
-
-
-
-
+//Set the database connection to be used in the routes
+app.set('db', db);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/createAccount', indexCreatAccountRouter);
+
+app.post('/createAccountSubmit', (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  const stmt = db.prepare('INSERT OR IGNORE INTO accounts (username, password) VALUES (?, ?)');
+  stmt.run(username, password);
+
+  res.redirect('/');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

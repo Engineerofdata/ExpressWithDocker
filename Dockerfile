@@ -1,10 +1,10 @@
 # The official Alpine image as the base image
-FROM alpine:latest
+FROM node:latest
 
 #Pulling the latest version of nodejs and npm
-RUN apk update && apk upgrade
-RUN apk add sqlite
-RUN apk add nodejs npm
+RUN apt update && apt upgrade -y 
+RUN apt install -y sqlite3
+
 
 # Set the working directory in the container
 COPY /app /src/
@@ -16,7 +16,7 @@ RUN npm install
 RUN npm install better-sqlite3
 RUN chmod +x commands.sh
 
-CMD ["/bin/sh","-c","./commands.sh"]
+CMD ["/bin/bash","-c","./commands.sh"]
 
 
 
